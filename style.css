@@ -1,7 +1,13 @@
 .content {
   display: flex;
   flex-direction: column;
-
   align-items: center;
-  justify-content: center;
+  width: 100%;
+}
+
+#tableauViz {
+  min-width: 800px;
+  width: 0px;
+  margin-left: auto;
+  margin-right: auto;
 }
