@@ -56,18 +56,30 @@ viz.addEventListener("firstinteractive", logWorkbookInformation);
 const oregonWashingtonButton = document.getElementById("oregon_and_washington");
 const clearFilterButton = document.getElementById("clear_filter");
 const undoButton = document.getElementById("undo");
+const filterRangeButton = document.getElementById("filter_range");
 
 // What to do when button is clicked
-oregonWashingtonButton.addEventListener("click", function oregonWashFunction(e) {
-  //Log what's pressed
-  console.log(e.target.value);
+oregonWashingtonButton.addEventListener(
+  "click",
+  function oregonWashFunction(e) {
+    //Log what's pressed
+    console.log(e.target.value);
 
-  //Apply the filter to all of the sheets
-  saleMap.applyFilterAsync("State", ["Washington", "Oregon"], "replace");
-  totalSales.applyFilterAsync("State", ["Washington", "Oregon"], "replace");
-  salesByProduct.applyFilterAsync("State", ["Washington", "Oregon"], "replace");
-  salesBySegment.applyFilterAsync("State", ["Washington", "Oregon"], "replace");
-});
+    //Apply the filter to all of the sheets
+    saleMap.applyFilterAsync("State", ["Washington", "Oregon"], "replace");
+    totalSales.applyFilterAsync("State", ["Washington", "Oregon"], "replace");
+    salesByProduct.applyFilterAsync(
+      "State",
+      ["Washington", "Oregon"],
+      "replace"
+    );
+    salesBySegment.applyFilterAsync(
+      "State",
+      ["Washington", "Oregon"],
+      "replace"
+    );
+  }
+);
 
 clearFilterButton.addEventListener("click", function clearState(e) {
   //Log what's pressed
@@ -83,4 +95,16 @@ clearFilterButton.addEventListener("click", function clearState(e) {
 undoButton.addEventListener("click", function unDo() {
   let viz = document.getElementById("tableauViz");
   viz.undoAsync();
+});
+
+//Adding range filters for map - doesn't make sense to do this for the other charts.
+filterRangeButton.addEventListener("click", function filterRangeFunction() {
+  //Bringing in min and max values specified in our number inputs on the HTML page. Have to conver these to floats to keep Tableau API happy
+  const minValue = parseFloat(document.getElementById("minValue").value);
+  const maxValue = parseFloat(document.getElementById("maxValue").value);
+  console.log(minValue, maxValue);
+  saleMap.applyRangeFilterAsync("SUM(Sales)", {
+    min: minValue,
+    max: maxValue,
+  });
 });

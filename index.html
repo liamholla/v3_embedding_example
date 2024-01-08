@@ -29,15 +29,32 @@
           class="filter1"
           id="oregon_and_washington"
         />
-        <input type="button" value="Clear Filter" class="filter2" id="clear_filter" />
+        <input
+          type="button"
+          value="Clear Filter"
+          class="filter2"
+          id="clear_filter"
+        />
         <input type="button" value="Undo" class="filter3" id="undo" />
+      </fieldset>
+
+      <fieldset>
+        <legend>Filter cities for a range of values!</legend>
+        <input type="number" placeholder="min value" id="minValue" />
+        <input type="number" placeholder="max value" id="maxValue" />
+        <input
+          type="button"
+          value="Filter Range"
+          class="filter4"
+          id="filter_range"
+        />
       </fieldset>
       <tableau-viz
         id="tableauViz"
         src="https://public.tableau.com/views/Superstore_embedded_800x800/Overview"
         toolbar="bottom"
         onFirstInteractive="firstinteractive"
-        height="100vh"
+        height="70vh"
         width="100vw"
       >
       </tableau-viz>
