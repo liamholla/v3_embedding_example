@@ -37,14 +37,11 @@ function logWorkbookInformation() {
     console.log(`The worksheet with index [${index}] is: "${worksheetName}"`);
   });
 
-  // Assign constants to the sheets
+  // Assign sheets to the variables created at the top of the script
   saleMap = listSheets.find((ws) => ws.name == "SaleMap");
   totalSales = listSheets.find((ws) => ws.name == "Total Sales");
   salesByProduct = listSheets.find((ws) => ws.name == "SalesbyProduct");
   salesBySegment = listSheets.find((ws) => ws.name == "SalesbySegment");
-
-  //Set the active sheet to overview
-  dashboard = workbook.activateSheetAsync("Overview");
 }
 
 // Log the workbook information once the viz has become interactive
@@ -58,28 +55,18 @@ const clearFilterButton = document.getElementById("clear_filter");
 const undoButton = document.getElementById("undo");
 const filterRangeButton = document.getElementById("filter_range");
 
-// What to do when button is clicked
-oregonWashingtonButton.addEventListener(
-  "click",
-  function oregonWashFunction(e) {
-    //Log what's pressed
-    console.log(e.target.value);
+// What to do when buttons are clicked
 
-    //Apply the filter to all of the sheets
-    saleMap.applyFilterAsync("State", ["Washington", "Oregon"], "replace");
-    totalSales.applyFilterAsync("State", ["Washington", "Oregon"], "replace");
-    salesByProduct.applyFilterAsync(
-      "State",
-      ["Washington", "Oregon"],
-      "replace"
-    );
-    salesBySegment.applyFilterAsync(
-      "State",
-      ["Washington", "Oregon"],
-      "replace"
-    );
-  }
-);
+oregonWashingtonButton.addEventListener("click", function oregonWashFunction(e) {
+  //Log what's pressed
+  console.log(e.target.value);
+
+  //Apply the filter to all of the sheets
+  saleMap.applyFilterAsync("State", ["Washington", "Oregon"], "replace");
+  totalSales.applyFilterAsync("State", ["Washington", "Oregon"], "replace");
+  salesByProduct.applyFilterAsync("State", ["Washington", "Oregon"], "replace");
+  salesBySegment.applyFilterAsync("State", ["Washington", "Oregon"], "replace");
+});
 
 clearFilterButton.addEventListener("click", function clearState(e) {
   //Log what's pressed
@@ -99,7 +86,8 @@ undoButton.addEventListener("click", function unDo() {
 
 //Adding range filters for map - doesn't make sense to do this for the other charts.
 filterRangeButton.addEventListener("click", function filterRangeFunction() {
-  //Bringing in min and max values specified in our number inputs on the HTML page. Have to conver these to floats to keep Tableau API happy
+  //Bringing in min and max values specified in our number inputs on the HTML page.
+  // Have to convert these to floats to keep Tableau API happy
   const minValue = parseFloat(document.getElementById("minValue").value);
   const maxValue = parseFloat(document.getElementById("maxValue").value);
   console.log(minValue, maxValue);

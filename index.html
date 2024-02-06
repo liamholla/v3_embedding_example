@@ -21,40 +21,24 @@
   <body>
     <div class="content">
       <h1>My big dashboard about something really interesting!</h1>
-      <fieldset>
+      <fieldset id="first_row_of_buttons">
         <legend>Filter the view!</legend>
-        <input
-          type="button"
-          value="Oregon and Washington Only"
-          class="filter1"
-          id="oregon_and_washington"
-        />
-        <input
-          type="button"
-          value="Clear Filter"
-          class="filter2"
-          id="clear_filter"
-        />
-        <input type="button" value="Undo" class="filter3" id="undo" />
+        <input type="button" value="Oregon and Washington Only" id="oregon_and_washington" />
+        <input type="button" value="Clear Filter" id="clear_filter" />
+        <input type="button" value="Undo" id="undo" />
       </fieldset>
 
-      <fieldset>
+      <fieldset id="second_row_of_buttons">
         <legend>Filter cities for a range of values!</legend>
         <input type="number" placeholder="min value" id="minValue" />
         <input type="number" placeholder="max value" id="maxValue" />
-        <input
-          type="button"
-          value="Filter Range"
-          class="filter4"
-          id="filter_range"
-        />
+        <input type="button" value="Filter Range" id="filter_range" />
       </fieldset>
       <tableau-viz
         id="tableauViz"
         src="https://public.tableau.com/views/Superstore_embedded_800x800/Overview"
         toolbar="bottom"
-        onFirstInteractive="firstinteractive"
-        height="70vh"
+        height="100vh"
         width="100vw"
       >
       </tableau-viz>
