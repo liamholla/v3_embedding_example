@@ -27,10 +27,10 @@ function logWorkbookInformation() {
 
   // We are normally only interested in interacting with the active sheet (tab), so lets get that
   vizActiveSheet = workbook.activeSheet;
-  listSheets = vizActiveSheet.worksheets;
   console.log(`The active sheet is "${vizActiveSheet.name}"`);
 
   // List all of the worksheets within the active sheet
+  listSheets = vizActiveSheet.worksheets;
   listSheets.forEach((element) => {
     index = element.index;
     worksheetName = element.name;
@@ -55,39 +55,41 @@ const clearFilterButton = document.getElementById("clear_filter");
 const undoButton = document.getElementById("undo");
 const filterRangeButton = document.getElementById("filter_range");
 
-// What to do when buttons are clicked
+// Functions that tell JS what to do when buttons are clicked
 
-oregonWashingtonButton.addEventListener("click", function oregonWashFunction(e) {
+function oregonWashFunction() {
   //Log what's pressed
-  console.log(e.target.value);
+  console.log(oregonWashingtonButton.value);
 
   //Apply the filter to all of the sheets
   saleMap.applyFilterAsync("State", ["Washington", "Oregon"], "replace");
   totalSales.applyFilterAsync("State", ["Washington", "Oregon"], "replace");
   salesByProduct.applyFilterAsync("State", ["Washington", "Oregon"], "replace");
   salesBySegment.applyFilterAsync("State", ["Washington", "Oregon"], "replace");
-});
+}
 
-clearFilterButton.addEventListener("click", function clearState(e) {
+function clearStateFilter() {
   //Log what's pressed
-  console.log(e.target.value);
+  console.log(clearFilterButton.value);
 
   //Apply the filter to all of the sheets
   saleMap.clearFilterAsync("State");
   totalSales.clearFilterAsync("State");
   salesByProduct.clearFilterAsync("State");
   salesBySegment.clearFilterAsync("State");
-});
+}
 
-undoButton.addEventListener("click", function unDo() {
-  let viz = document.getElementById("tableauViz");
+function unDo() {
+  // Log what's pressed
+  console.log(undoButton.value);
+
+  //Undo last action to viz
   viz.undoAsync();
-});
+}
 
-//Adding range filters for map - doesn't make sense to do this for the other charts.
-filterRangeButton.addEventListener("click", function filterRangeFunction() {
+function filterRangeFunction() {
   //Bringing in min and max values specified in our number inputs on the HTML page.
-  // Have to convert these to floats to keep Tableau API happy
+  //Have to convert these to floats to keep Tableau API happy
   const minValue = parseFloat(document.getElementById("minValue").value);
   const maxValue = parseFloat(document.getElementById("maxValue").value);
   console.log(minValue, maxValue);
@@ -95,4 +97,11 @@ filterRangeButton.addEventListener("click", function filterRangeFunction() {
     min: minValue,
     max: maxValue,
   });
-});
+}
+
+//Event listeners that wait for the button click
+
+oregonWashingtonButton.addEventListener("click", oregonWashFunction);
+clearFilterButton.addEventListener("click", clearStateFilter);
+undoButton.addEventListener("click", unDo);
+filterRangeButton.addEventListener("click", filterRangeFunction);
